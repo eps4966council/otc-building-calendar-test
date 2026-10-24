@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>One Town Centre | Building Calendar</title>
+<title>One Town Centre | Calendar Test</title>
 
 <style>
 * {
@@ -12,27 +12,54 @@
 }
 
 html, body {
-  margin: 0;
   width: 100%;
   height: 100%;
+  margin: 0;
   overflow: hidden;
 }
 
 body {
-  background: #EAF4F5;
-  color: #18323B;
-  font-family: "Avenir Next LT Pro", "Avenir Next", Avenir, Arial, sans-serif;
+  background: #d7e2e3;
+  font-family:
+    "Avenir Next LT Pro",
+    "Avenir Next",
+    Avenir,
+    Arial,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-/* PAGE AND HEADER */
+/* TEST PREVIEW VIEWPORT */
+
+#preview {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+#preview.actual-size {
+  overflow: auto;
+}
+
+#screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  transform-origin: center center;
+  background: #EAF4F5;
+}
+
+/* FIXED 1080P CALENDAR */
 
 .page {
   position: relative;
   z-index: 2;
-  width: 100vw;
-  height: 100vh;
+  width: 1920px;
+  height: 1080px;
   padding: 58px 72px 205px;
   display: flex;
   flex-direction: column;
@@ -66,7 +93,7 @@ body {
   text-align: right;
 }
 
-/* EVENT CARDS */
+/* EVENT LIST */
 
 .events {
   display: flex;
@@ -78,10 +105,10 @@ body {
 
 .event {
   --event-color: #17636B;
-  height: 118px;
-  min-height: 118px;
   display: grid;
   grid-template-columns: 180px minmax(0, 1fr);
+  height: 118px;
+  min-height: 118px;
   overflow: hidden;
   border-radius: 11px;
   background: rgba(255,255,255,0.78);
@@ -91,13 +118,13 @@ body {
 /* DATE BLOCK */
 
 .date-block {
-  background: var(--event-color);
-  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 11px;
   padding: 10px 12px;
+  background: var(--event-color);
+  color: #fff;
 }
 
 .day {
@@ -129,7 +156,7 @@ body {
   opacity: 0.95;
 }
 
-/* TIME | TITLE | DESCRIPTION */
+/* EVENT INFORMATION */
 
 .details {
   display: grid;
@@ -165,10 +192,10 @@ body {
   font-weight: 500;
   letter-spacing: -0.025em;
   overflow: hidden;
+  overflow-wrap: break-word;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-  overflow-wrap: break-word;
 }
 
 .location {
@@ -200,7 +227,7 @@ body {
   border-left-color: transparent;
 }
 
-/* COMPLETED EVENTS TODAY */
+/* COMPLETED EVENTS */
 
 .event.past {
   background: rgba(255,255,255,0.43);
@@ -215,10 +242,6 @@ body {
 .event.past .location,
 .event.past .description {
   color: #829497;
-}
-
-.event.past .description {
-  border-left-color: rgba(110,130,133,0.12);
 }
 
 /* HOLIDAYS */
@@ -245,14 +268,10 @@ body {
   font-weight: 400;
 }
 
-/* OFFICIAL LOGO
-   Keep behind the cards.
-   The source PNG supplies the silhouette.
-*/
+/* OFFICIAL OTC LOGO */
 
 .otc-logo {
-  display: block;
-  position: fixed;
+  position: absolute;
   z-index: 1;
   width: 220px;
   height: 95px;
@@ -264,7 +283,7 @@ body {
   pointer-events: none;
 }
 
-/* EMPTY STATE AND STATUS */
+/* EMPTY STATE */
 
 .empty-state {
   display: flex;
@@ -275,8 +294,10 @@ body {
   font-size: 30px;
 }
 
+/* REFRESH STATUS */
+
 .status {
-  position: fixed;
+  position: absolute;
   z-index: 3;
   right: 28px;
   bottom: 20px;
@@ -291,144 +312,78 @@ body {
   opacity: 1;
 }
 
-/* 4K DISPLAY */
+/* TEST-ONLY PREVIEW CONTROLS */
 
-@media (min-width: 2560px) {
-  .page {
-    padding: 116px 144px 410px;
-  }
-
-  .header {
-    margin-bottom: 104px;
-  }
-
-  .heading {
-    font-size: 112px;
-  }
-
-  .datetime {
-    font-size: 52px;
-  }
-
-  .events {
-    gap: 32px;
-  }
-
-  .event {
-    grid-template-columns: 360px minmax(0,1fr);
-    height: 236px;
-    min-height: 236px;
-    border-radius: 22px;
-  }
-
-  .date-block {
-    gap: 22px;
-    padding: 20px 24px;
-  }
-
-  .day { font-size: 124px; }
-  .month { font-size: 46px; }
-  .weekday { font-size: 40px; margin-top: 14px; }
-
-  .details {
-    grid-template-columns:
-      520px
-      minmax(0,1.35fr)
-      minmax(560px,0.85fr);
-    gap: 48px;
-    padding: 28px 68px;
-  }
-
-  .event-meta { font-size: 50px; }
-  .title { font-size: 76px; }
-  .location { font-size: 46px; margin-top: 10px; }
-  .description { font-size: 42px; padding-left: 44px; }
-
-  .otc-logo {
-    width: 440px;
-    height: 190px;
-    right: 114px;
-    bottom: 96px;
-  }
+.preview-controls {
+  position: fixed;
+  z-index: 10;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px;
+  background: rgba(25,45,49,0.93);
+  border-radius: 9px;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.16);
 }
 
-/* SMALLER PREVIEWS */
-
-@media (max-width: 1500px) {
-  .page {
-    padding: 46px 46px 155px;
-  }
-
-  .header {
-    margin-bottom: 42px;
-  }
-
-  .heading { font-size: 40px; }
-  .datetime { font-size: 21px; }
-  .events { gap: 10px; }
-
-  .event {
-    grid-template-columns: 145px minmax(0,1fr);
-    height: 105px;
-    min-height: 105px;
-  }
-
-  .date-block {
-    gap: 8px;
-    padding: 8px 10px;
-  }
-
-  .day { font-size: 50px; }
-  .month { font-size: 18px; }
-  .weekday { font-size: 16px; margin-top: 5px; }
-
-  .details {
-    grid-template-columns:
-      190px
-      minmax(0,1.35fr)
-      minmax(200px,0.85fr);
-    gap: 16px;
-    padding: 12px 22px;
-  }
-
-  .event-meta { font-size: 20px; }
-  .title { font-size: 29px; }
-  .location { font-size: 18px; }
-  .description { font-size: 16px; padding-left: 16px; }
-
-  .otc-logo {
-    width: 175px;
-    height: 76px;
-    right: 42px;
-    bottom: 36px;
-  }
+.preview-controls button {
+  border: 0;
+  border-radius: 5px;
+  padding: 9px 13px;
+  background: transparent;
+  color: #e9f2f2;
+  font-size: 13px;
+  cursor: pointer;
 }
 
-@media (max-width: 1100px) {
-  .description { display: none; }
+.preview-controls button.active {
+  background: #e9f2f2;
+  color: #193d43;
+}
 
-  .details {
-    grid-template-columns: 180px minmax(0,1fr);
-  }
+.preview-controls .scale-label {
+  color: #c6d7d9;
+  font-size: 12px;
+  padding: 0 8px;
+  min-width: 48px;
+  text-align: center;
 }
 </style>
 </head>
 
 <body>
 
-<div class="otc-logo" aria-hidden="true"></div>
+<div id="preview">
+  <div id="screen">
 
-<main class="page">
-  <header class="header">
-    <h1 class="heading">Upcoming at One Town Centre</h1>
-    <div id="datetime" class="datetime"></div>
-  </header>
-  <section id="events" class="events"></section>
-</main>
+    <div class="otc-logo" aria-hidden="true"></div>
 
-<div id="status" class="status"></div>
+    <main class="page">
+      <header class="header">
+        <h1 class="heading">Upcoming at One Town Centre</h1>
+        <div id="datetime" class="datetime"></div>
+      </header>
+
+      <section id="events" class="events"></section>
+    </main>
+
+    <div id="status" class="status"></div>
+
+  </div>
+</div>
+
+<div class="preview-controls">
+  <button id="fitButton" class="active" type="button">Fit screen</button>
+  <button id="actualButton" type="button">100%</button>
+  <span id="scaleLabel" class="scale-label"></span>
+</div>
 
 <script>
+/* SETTINGS */
+
 const DATA_URL =
   'https://script.google.com/macros/s/AKfycbxWtIDDI_p34Ast0sKObU-2z5mp-UNApWQ9RTICJizoeXlqmY-BLu56pRgJf1Dwzonh/exec';
 
@@ -436,6 +391,64 @@ const MAX_EVENTS = 6;
 const LOOKAHEAD_DAYS = 60;
 const REFRESH_INTERVAL = 5 * 60 * 1000;
 const TIME_ZONE = 'America/Vancouver';
+
+const SCREEN_WIDTH = 1920;
+const SCREEN_HEIGHT = 1080;
+
+let previewMode = 'fit';
+
+/* PREVIEW SCALING */
+
+function updatePreview() {
+  const screen = document.getElementById('screen');
+  const preview = document.getElementById('preview');
+  const label = document.getElementById('scaleLabel');
+
+  if (previewMode === 'actual') {
+    preview.classList.add('actual-size');
+
+    screen.style.top = '0';
+    screen.style.left = '0';
+    screen.style.transform = 'none';
+
+    label.textContent = '100%';
+  } else {
+    preview.classList.remove('actual-size');
+
+    const scale = Math.min(
+      window.innerWidth / SCREEN_WIDTH,
+      window.innerHeight / SCREEN_HEIGHT
+    );
+
+    screen.style.top = '50%';
+    screen.style.left = '50%';
+    screen.style.transform =
+      `translate(-50%, -50%) scale(${scale})`;
+
+    label.textContent = Math.round(scale * 100) + '%';
+  }
+
+  document.getElementById('fitButton')
+    .classList.toggle('active', previewMode === 'fit');
+
+  document.getElementById('actualButton')
+    .classList.toggle('active', previewMode === 'actual');
+}
+
+document.getElementById('fitButton').addEventListener('click', () => {
+  previewMode = 'fit';
+  updatePreview();
+});
+
+document.getElementById('actualButton').addEventListener('click', () => {
+  previewMode = 'actual';
+  updatePreview();
+});
+
+window.addEventListener('resize', updatePreview);
+updatePreview();
+
+/* CLOCK */
 
 function updateDateTime() {
   const now = new Date();
@@ -461,16 +474,18 @@ function updateDateTime() {
 updateDateTime();
 setInterval(updateDateTime, 30000);
 
+/* FETCH EVENTS */
+
 function loadEvents() {
   const callbackName = 'calendarCallback_' + Date.now();
   const script = document.createElement('script');
 
   window[callbackName] = function(data) {
     try {
-      const prepared = prepareEvents(
+      const events = prepareEvents(
         Array.isArray(data) ? data : []
       );
-      renderEvents(prepared);
+      renderEvents(events);
       showStatus('Updated');
     } finally {
       delete window[callbackName];
@@ -492,19 +507,25 @@ function loadEvents() {
   document.body.appendChild(script);
 }
 
+/* EVENT FILTERING */
+
 function vancouverDateKey(date) {
-  return new Intl.DateTimeFormat('en-CA', {
+  const parts = new Intl.DateTimeFormat('en-CA', {
     timeZone: TIME_ZONE,
     year: 'numeric',
     month: '2-digit',
     day: '2-digit'
-  }).format(date);
+  }).formatToParts(date);
+
+  const value = type =>
+    parts.find(part => part.type === type)?.value || '';
+
+  return value('year') + '-' + value('month') + '-' + value('day');
 }
 
 function prepareEvents(events) {
   const now = new Date();
   const todayKey = vancouverDateKey(now);
-  const tomorrow = new Date(now.getTime() + 86400000);
   const cutoff = new Date(now.getTime() + LOOKAHEAD_DAYS * 86400000);
   const cutoffKey = vancouverDateKey(cutoff);
 
@@ -529,10 +550,9 @@ function prepareEvents(events) {
       ? new Date(event.endDate)
       : start;
 
-    const startedToday = startKey === todayKey;
     const hasEnded = !event.allDay && end < now;
 
-    if (startedToday && hasEnded) {
+    if (startKey === todayKey && hasEnded) {
       pastToday.push({ ...event, isPast: true });
     } else {
       upcoming.push({ ...event, isPast: false });
@@ -549,6 +569,8 @@ function prepareEvents(events) {
 
   return pastToday.concat(upcoming).slice(0, MAX_EVENTS);
 }
+
+/* RENDER EVENTS */
 
 function renderEvents(events) {
   const container = document.getElementById('events');
@@ -586,6 +608,7 @@ function buildEventHTML(event) {
   return `
     <article class="${classes.join(' ')}"
              style="--event-color:${color};">
+
       <div class="date-block">
         <div class="day">${escapeHTML(event.day || '')}</div>
         <div class="date-text">
@@ -602,9 +625,12 @@ function buildEventHTML(event) {
         </div>
         ${description}
       </div>
+
     </article>
   `;
 }
+
+/* HELPERS */
 
 function isValidHexColor(value) {
   return typeof value === 'string' &&
