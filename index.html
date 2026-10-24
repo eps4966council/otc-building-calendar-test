@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>One Town Centre</title>
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: #EAF4F5;
+  color: #24383B;
+
+  font-family:
+    "Avenir Next LT Pro",
+    "Avenir Next",
+    Avenir,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+
+/* =========================================
+   PAGE
+========================================= */
+
+.page {
+  position: relative;
+  z-index: 2;
+
+  width: 100vw;
+  height: 100vh;
+
+  padding:
+    58px
+    72px
+    205px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 40px;
+
+  margin-bottom: 52px;
+
+  flex-shrink: 0;
+}
+
+.heading {
+  margin: 0;
+
+  color: #17636B;
+
+  font-size: 56px;
+  line-height: 1;
+
+  font-weight: 400;
+
+  letter-spacing: -0.035em;
+
+  white-space: nowrap;
+}
+
+.datetime {
+  color: rgba(23, 99, 107, 0.62);
+
+  font-size: 26px;
+  line-height: 1;
+
+  font-weight: 400;
+
+  letter-spacing: -0.02em;
+
+  white-space: nowrap;
+
+  text-align: right;
+}
+
+
+/* =========================================
+   EVENT LIST
+========================================= */
+
+.events {
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+
+  flex: 1;
+
+  min-height: 0;
+}
+
+
+/* =========================================
+   EVENT CARD
+========================================= */
+
+.event {
+  --event-color: #17636B;
+
+  height: 118px;
+  min-height: 118px;
+
+  display: grid;
+
+  grid-template-columns:
+    180px
+    1fr;
+
+  overflow: hidden;
+
+  border-radius: 11px;
+
+  background:
+    rgba(255, 255, 255, 0.72);
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================
+   DATE BLOCK
+========================================= */
+
+.date-block {
+  background: var(--event-color);
+
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 13px;
+
+  padding: 10px 16px;
+}
+
+.day {
+  /*
+    Date number stays approximately
+    the same size as the current version.
+  */
+
+  font-size: 62px;
+  line-height: 0.92;
+
+  font-weight: 600;
+
+  letter-spacing: -0.055em;
+}
+
+.date-text {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+
+  min-width: 0;
+
+  line-height: 1;
+}
+
+.month {
+  /*
+    Month is slightly larger and easier
+    to read from lobby distance.
+  */
+
+  font-size: 21px;
+
+  font-weight: 500;
+
+  letter-spacing: 0.06em;
+}
+
+.weekday {
+  margin-top: 7px;
+
+  font-size: 18px;
+
+  font-weight: 400;
+
+  letter-spacing: 0.08em;
+
+  opacity: 0.94;
+}
+
+
+/* =========================================
+   EVENT DETAILS
+
+   Time | Event + Location | Description
+========================================= */
+
+.details {
+  display: grid;
+
+  grid-template-columns:
+    225px
+    minmax(0, 1.35fr)
+    minmax(340px, 0.95fr);
+
+  align-items: center;
+
+  gap: 26px;
+
+  padding:
+    15px
+    36px;
+
+  min-width: 0;
+}
+
+
+/* =========================================
+   TIME
+========================================= */
+
+.event-meta {
+  color: #526C70;
+
+  font-size: 21px;
+  line-height: 1.2;
+
+  font-weight: 400;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   TITLE + LOCATION
+========================================= */
+
+.event-info {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+}
+
+.title {
+  color: #203B3E;
+
+  font-size: 32px;
+  line-height: 1.10;
+
+  font-weight: 500;
+
+  letter-spacing: -0.025em;
+
+  white-space: normal;
+
+  overflow: hidden;
+
+  display: -webkit-box;
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.location {
+  margin-top: 5px;
+
+  color: #5F787B;
+
+  font-size: 19px;
+  line-height: 1.15;
+
+  font-weight: 400;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   DESCRIPTION
+========================================= */
+
+.description {
+  min-width: 0;
+
+  padding-left: 22px;
+
+  border-left:
+    1px solid
+    rgba(23, 99, 107, 0.17);
+
+  color: #526C70;
+
+  font-size: 18px;
+  line-height: 1.34;
+
+  font-weight: 400;
+
+  display: -webkit-box;
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+
+  overflow: hidden;
+}
+
+.description.empty {
+  border-left-color:
+    rgba(23, 99, 107, 0.06);
+}
+
+
+/* =========================================
+   COMPLETED TODAY
+========================================= */
+
+.event.past {
+  background:
+    rgba(255, 255, 255, 0.42);
+}
+
+.event.past .date-block {
+  background: #AEBDBF;
+}
+
+.event.past .event-meta,
+.event.past .title,
+.event.past .location,
+.event.past .description {
+  color: #829497;
+}
+
+.event.past .description {
+  border-left-color:
+    rgba(110, 130, 133, 0.13);
+}
+
+
+/* =========================================
+   HOLIDAYS
+========================================= */
+
+.event.holiday {
+  background:
+    rgba(255, 255, 255, 0.42);
+}
+
+.event.holiday .date-block {
+  background: #B8CBCD;
+
+  color:
+    rgba(255, 255, 255, 0.96);
+}
+
+.event.holiday .details {
+  grid-template-columns: 1fr;
+}
+
+.event.holiday .event-meta,
+.event.holiday .description {
+  display: none;
+}
+
+.event.holiday .title {
+  color: #71888B;
+
+  font-weight: 400;
+}
+
+
+/* =========================================
+   OTC LOGO
+
+   Uses the official transparent PNG
+   as a mask and fills it exact teal.
+
+   It is BELOW the event layer, so cards
+   always cover it if they reach this area.
+========================================= */
+
+.otc-logo {
+  position: fixed;
+
+  z-index: 1;
+
+  width: 220px;
+  height: 95px;
+
+  right: 57px;
+  bottom: 48px;
+
+  background: #17636B;
+
+  -webkit-mask-image:
+    url("otc-logo.png");
+
+  -webkit-mask-repeat:
+    no-repeat;
+
+  -webkit-mask-position:
+    center;
+
+  -webkit-mask-size:
+    contain;
+
+  mask-image:
+    url("otc-logo.png");
+
+  mask-repeat:
+    no-repeat;
+
+  mask-position:
+    center;
+
+  mask-size:
+    contain;
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.empty-state {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex: 1;
+
+  color: #758E91;
+
+  font-size: 30px;
+
+  font-weight: 400;
+}
+
+
+/* =========================================
+   UPDATE STATUS
+========================================= */
+
+.status {
+  position: fixed;
+
+  z-index: 3;
+
+  right: 28px;
+  bottom: 20px;
+
+  color:
+    rgba(23, 99, 107, 0.38);
+
+  font-size: 13px;
+
+  opacity: 0;
+
+  transition:
+    opacity 0.4s ease;
+
+  pointer-events: none;
+}
+
+.status.visible {
+  opacity: 1;
+}
+
+
+/* =========================================
+   4K DISPLAY
+========================================= */
+
+@media (min-width: 2560px) {
+
+  .page {
+    padding:
+      116px
+      144px
+      410px;
+  }
+
+  .header {
+    margin-bottom: 104px;
+  }
+
+  .heading {
+    font-size: 112px;
+  }
+
+  .datetime {
+    font-size: 52px;
+  }
+
+  .events {
+    gap: 32px;
+  }
+
+  .event {
+    grid-template-columns:
+      360px
+      1fr;
+
+    height: 236px;
+    min-height: 236px;
+
+    border-radius: 22px;
+  }
+
+  .date-block {
+    gap: 26px;
+
+    padding:
+      20px
+      32px;
+  }
+
+  .day {
+    font-size: 124px;
+  }
+
+  .month {
+    font-size: 42px;
+  }
+
+  .weekday {
+    font-size: 36px;
+
+    margin-top: 14px;
+  }
+
+  .details {
+    grid-template-columns:
+      450px
+      minmax(0, 1.35fr)
+      minmax(680px, 0.95fr);
+
+    gap: 52px;
+
+    padding:
+      30px
+      72px;
+  }
+
+  .event-meta {
+    font-size: 42px;
+  }
+
+  .title {
+    font-size: 64px;
+  }
+
+  .location {
+    margin-top: 10px;
+
+    font-size: 38px;
+  }
+
+  .description {
+    font-size: 36px;
+
+    padding-left: 44px;
+  }
+
+  .otc-logo {
+    width: 440px;
+    height: 190px;
+
+    right: 114px;
+    bottom: 96px;
+  }
+
+}
+
+
+/* =========================================
+   SMALLER DISPLAY / PREVIEW
+
+   This is also what your uploaded screenshot
+   uses when viewed at reduced dimensions.
+========================================= */
+
+@media (max-width: 1500px) {
+
+  .page {
+    padding:
+      46px
+      46px
+      155px;
+  }
+
+  .header {
+    margin-bottom: 42px;
+  }
+
+  .heading {
+    font-size: 40px;
+  }
+
+  .datetime {
+    font-size: 21px;
+  }
+
+  .events {
+    gap: 10px;
+  }
+
+  .event {
+    grid-template-columns:
+      145px
+      1fr;
+
+    height: 105px;
+    min-height: 105px;
+  }
+
+  .date-block {
+    gap: 10px;
+
+    padding:
+      8px
+      12px;
+  }
+
+  .day {
+    font-size: 50px;
+  }
+
+  .month {
+    font-size: 18px;
+  }
+
+  .weekday {
+    margin-top: 5px;
+
+    font-size: 16px;
+  }
+
+  .details {
+    grid-template-columns:
+      185px
+      minmax(0, 1.35fr)
+      minmax(245px, 0.95fr);
+
+    gap: 18px;
+
+    padding:
+      12px
+      24px;
+  }
+
+  .event-meta {
+    font-size: 19px;
+  }
+
+  .title {
+    font-size: 27px;
+  }
+
+  .location {
+    font-size: 17px;
+  }
+
+  .description {
+    font-size: 15px;
+
+    padding-left: 16px;
+  }
+
+  .otc-logo {
+    width: 175px;
+    height: 76px;
+
+    right: 42px;
+    bottom: 36px;
+  }
+
+}
+
+
+/* =========================================
+   VERY NARROW VIEWPORT
+========================================= */
+
+@media (max-width: 1100px) {
+
+  .description {
+    display: none;
+  }
+
+  .details {
+    grid-template-columns:
+      180px
+      minmax(0, 1fr);
+  }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div
+  class="otc-logo"
+  aria-hidden="true"
+></div>
+
+
+<main class="page">
+
+  <header class="header">
+
+    <h1 class="heading">
+      Upcoming at One Town Centre
+    </h1>
+
+    <div
+      id="datetime"
+      class="datetime"
+    ></div>
+
+  </header>
+
+
+  <section
+    id="events"
+    class="events"
+  ></section>
+
+</main>
+
+
+<div
+  id="status"
+  class="status"
+></div>
+
+
+<script>
+
+/* =========================================
+   SETTINGS
+========================================= */
+
+const DATA_URL =
+  'https://script.google.com/macros/s/AKfycbxWtIDDI_p34Ast0sKObU-2z5mp-UNApWQ9RTICJizoeXlqmY-BLu56pRgJf1Dwzonh/exec';
+
+const MAX_EVENTS = 6;
+
+const LOOKAHEAD_DAYS = 60;
+
+const REFRESH_INTERVAL =
+  5 * 60 * 1000;
+
+
+/* =========================================
+   DATE + TIME
+========================================= */
+
+function updateDateTime() {
+
+  const now =
+    new Date();
+
+  const date =
+    now.toLocaleDateString(
+      'en-CA',
+      {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric'
+      }
+    );
+
+  const time =
+    now.toLocaleTimeString(
+      'en-CA',
+      {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+      }
+    );
+
+  document
+    .getElementById('datetime')
+    .textContent =
+      date + ' · ' + time;
+
+}
+
+
+updateDateTime();
+
+setInterval(
+  updateDateTime,
+  30000
+);
+
+
+/* =========================================
+   LOAD EVENTS
+========================================= */
+
+function loadEvents() {
+
+  const callbackName =
+    'calendarCallback_' +
+    Date.now();
+
+  const script =
+    document.createElement(
+      'script'
+    );
+
+
+  window[callbackName] =
+    function(data) {
+
+      try {
+
+        const prepared =
+          prepareEvents(
+            Array.isArray(data)
+              ? data
+              : []
+          );
+
+        renderEvents(
+          prepared
+        );
+
+        showStatus(
+          'Updated'
+        );
+
+      }
+
+      finally {
+
+        delete window[
+          callbackName
+        ];
+
+        script.remove();
+
+      }
+
+    };
+
+
+  script.onerror =
+    function() {
+
+      delete window[
+        callbackName
+      ];
+
+      script.remove();
+
+      showStatus(
+        'Update unavailable'
+      );
+
+    };
+
+
+  script.src =
+    DATA_URL +
+    '?callback=' +
+    callbackName +
+    '&_=' +
+    Date.now();
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+/* =========================================
+   PREPARE EVENTS
+========================================= */
+
+function prepareEvents(events) {
+
+  const now =
+    new Date();
+
+
+  const today =
+    new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate()
+    );
+
+
+  const tomorrow =
+    new Date(today);
+
+  tomorrow.setDate(
+    tomorrow.getDate() + 1
+  );
+
+
+  const cutoff =
+    new Date(today);
+
+  cutoff.setDate(
+    cutoff.getDate() +
+    LOOKAHEAD_DAYS
+  );
+
+
+  const pastToday = [];
+
+  const upcoming = [];
+
+
+  events.forEach(event => {
+
+    if (!event.sortDate) {
+      return;
+    }
+
+
+    const start =
+      new Date(
+        event.sortDate
+      );
+
+
+    if (
+      start < today ||
+      start > cutoff
+    ) {
+      return;
+    }
+
+
+    if (
+      event.type ===
+      'holiday'
+    ) {
+
+      upcoming.push(
+        {
+          ...event,
+          isPast: false
+        }
+      );
+
+      return;
+
+    }
+
+
+    const end =
+      event.endDate
+        ? new Date(
+            event.endDate
+          )
+        : start;
+
+
+    const startedToday =
+      start >= today &&
+      start < tomorrow;
+
+
+    const hasEnded =
+      !event.allDay &&
+      end < now;
+
+
+    if (
+      startedToday &&
+      hasEnded
+    ) {
+
+      pastToday.push(
+        {
+          ...event,
+          isPast: true
+        }
+      );
+
+    }
+
+    else {
+
+      upcoming.push(
+        {
+          ...event,
+          isPast: false
+        }
+      );
+
+    }
+
+  });
+
+
+  pastToday.sort(
+    (a, b) =>
+      new Date(a.sortDate) -
+      new Date(b.sortDate)
+  );
+
+
+  upcoming.sort(
+    (a, b) =>
+      new Date(a.sortDate) -
+      new Date(b.sortDate)
+  );
+
+
+  /*
+    Maximum of six cards on screen.
+    Completed events from today appear first.
+  */
+
+  return pastToday
+    .concat(upcoming)
+    .slice(
+      0,
+      MAX_EVENTS
+    );
+
+}
+
+
+/* =========================================
+   RENDER
+========================================= */
+
+function renderEvents(events) {
+
+  const container =
+    document.getElementById(
+      'events'
+    );
+
+
+  if (
+    !events ||
+    events.length === 0
+  ) {
+
+    container.innerHTML =
+      '<div class="empty-state">' +
+      'No upcoming building events' +
+      '</div>';
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    events
+      .map(
+        event =>
+          buildEventHTML(
+            event
+          )
+      )
+      .join('');
+
+}
+
+
+/* =========================================
+   BUILD EVENT
+========================================= */
+
+function buildEventHTML(event) {
+
+  const holiday =
+    event.type ===
+    'holiday';
+
+
+  const classes = [
+    'event'
+  ];
+
+
+  if (holiday) {
+    classes.push(
+      'holiday'
+    );
+  }
+
+
+  if (event.isPast) {
+    classes.push(
+      'past'
+    );
+  }
+
+
+  const color =
+    isValidHexColor(
+      event.color
+    )
+      ? event.color
+      : '#17636B';
+
+
+  const location =
+    !holiday &&
+    event.location
+      ? `
+        <div class="location">
+          ${escapeHTML(event.location)}
+        </div>
+      `
+      : '';
+
+
+  const description =
+    !holiday &&
+    event.description
+      ? `
+        <div class="description">
+          ${escapeHTML(event.description)}
+        </div>
+      `
+      : `
+        <div class="description empty"></div>
+      `;
+
+
+  const time =
+    event.time
+      ? escapeHTML(
+          event.time
+        )
+      : '';
+
+
+  return `
+    <article
+      class="${classes.join(' ')}"
+      style="--event-color:${color};"
+    >
+
+      <div class="date-block">
+
+        <div class="day">
+          ${escapeHTML(event.day || '')}
+        </div>
+
+        <div class="date-text">
+
+          <div class="month">
+            ${escapeHTML(event.month || '')}
+          </div>
+
+          <div class="weekday">
+            ${escapeHTML(event.weekday || '')}
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="details">
+
+        <div class="event-meta">
+          ${time}
+        </div>
+
+
+        <div class="event-info">
+
+          <div class="title">
+            ${escapeHTML(event.title || '')}
+          </div>
+
+          ${location}
+
+        </div>
+
+
+        ${description}
+
+      </div>
+
+    </article>
+  `;
+
+}
+
+
+/* =========================================
+   HELPERS
+========================================= */
+
+function isValidHexColor(value) {
+
+  return (
+    typeof value ===
+      'string' &&
+    /^#[0-9A-Fa-f]{6}$/.test(
+      value
+    )
+  );
+
+}
+
+
+function escapeHTML(value) {
+
+  return String(
+    value ?? ''
+  )
+
+    .replace(
+      /&/g,
+      '&amp;'
+    )
+
+    .replace(
+      /</g,
+      '&lt;'
+    )
+
+    .replace(
+      />/g,
+      '&gt;'
+    )
+
+    .replace(
+      /"/g,
+      '&quot;'
+    )
+
+    .replace(
+      /'/g,
+      '&#039;'
+    );
+
+}
+
+
+function showStatus(text) {
+
+  const element =
+    document.getElementById(
+      'status'
+    );
+
+
+  element.textContent =
+    text;
+
+
+  element.classList.add(
+    'visible'
+  );
+
+
+  clearTimeout(
+    window.statusTimer
+  );
+
+
+  window.statusTimer =
+    setTimeout(
+      () => {
+
+        element.classList.remove(
+          'visible'
+        );
+
+      },
+      2500
+    );
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+loadEvents();
+
+setInterval(
+  loadEvents,
+  REFRESH_INTERVAL
+);
+
+</script>
+
+</body>
+</html>
