@@ -338,7 +338,8 @@ body {
   width: 180px;
   height: 165px;
   object-fit: contain;
-  object-position: center;
+  object-position : center;
+   filter: brightness(0) saturate(100%) invert(29%) sepia(30%) saturate(1192%) hue-rotate(137deg) brightness(91%) contrast(88%);
 
   pointer-events: none;
   user-select: none;
@@ -669,7 +670,7 @@ const MAX_EVENTS = 4;
 const MAX_COMPLETED_TODAY = 1;
 const LOOKAHEAD_DAYS = 30;
 const REFRESH_INTERVAL = 5 * 60 * 1000;
-const TIME_ZONE = 'America/Vancouver';
+const TIME_ZONE = 'Etc/GMT+7';
 
 /* CLOCK */
 
@@ -998,7 +999,7 @@ function buildTimeHTML(value, allDay) {
     return `
       <div class="event-meta single-time">
         <div class="time-row">
-          <span class="time-label">Time</span>
+          
           <span class="time-value">
             ${escapeHTML(time.start)}
           </span>
@@ -1010,16 +1011,16 @@ function buildTimeHTML(value, allDay) {
   return `
     <div class="event-meta">
       <div class="time-row">
-        <span class="time-label">Start</span>
+        
         <span class="time-value">
           ${escapeHTML(time.start)}
         </span>
       </div>
 
       <div class="time-row">
-        <span class="time-label">End</span>
+        
         <span class="time-value">
-          ${escapeHTML(time.end)}
+           &#8595;&nbsp;${escapeHTML(time.end)}
         </span>
       </div>
     </div>
