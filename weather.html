@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One Town Centre | Weather</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%}body{background:#EAF4F5;color:#18323B;font-family:"Avenir Next LT Pro","Avenir Next",Avenir,Arial,sans-serif;-webkit-font-smoothing:antialiased}.page{position:relative;z-index:2;height:100vh;padding:56px 72px 150px;display:flex;flex-direction:column;gap:32px}header{display:flex;justify-content:space-between;align-items:center;gap:32px}h1{font-size:56px;line-height:1.1;letter-spacing:-.035em;font-weight:400;color:#17636B;margin:0}.clock{font-size:26px;color:#658B8F;text-align:right}.place{margin:8px 0 0;color:#658B8F;font-size:24px}.dashboard{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1.6fr;gap:24px}.panel{background:rgba(255,255,255,.95);border-radius:20px;padding:36px;box-shadow:0 6px 20px #18323B08}.current{display:flex;flex-direction:column;justify-content:space-between}.eyebrow{font-size:20px;letter-spacing:.12em;color:#658B8F;text-transform:uppercase}.now{display:flex;align-items:center;gap:22px;margin:12px 0}.temperature{font-size:140px;line-height:1;font-weight:500;letter-spacing:-.07em}.temperature small{font-size:45px;letter-spacing:0;font-weight:400}.hero-icon{width:130px;height:130px;flex-shrink:0;color:#17636B}.condition{font-size:38px;line-height:1.15;margin:8px 0}.feels{font-size:26px;color:#526F73}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:26px 20px;padding-top:26px;border-top:1px solid #17636B22;margin-top:28px}.metric span{display:block;color:#658B8F;font-size:20px;margin-bottom:6px}.metric strong{font-size:28px;font-weight:500}.forecast{display:flex;flex-direction:column}.forecast h2{margin:0 0 12px;color:#17636B;font-weight:400;font-size:34px}.summary{font-size:25px;color:#526F73;line-height:1.4;margin:0 0 30px}.hours{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;flex:1;align-items:stretch}.hour{border-radius:14px;background:#EAF4F580;text-align:center;padding:24px 8px;display:flex;flex-direction:column;align-items:center;justify-content:space-evenly;gap:16px}.hour-time{font-size:20px;color:#526F73;white-space:nowrap}.hour svg{width:64px;height:64px;color:#17636B}.hour-temp{font-size:37px}.rain{color:#17636B;font-size:23px}.rain-label{display:block;font-size:15px;color:#658B8F;margin-top:5px}.status{font-size:17px;line-height:1.4;color:#658B8F;margin-top:24px}.status.stale{color:#946323}.logo{position:fixed;z-index:1;width:180px;height:165px;object-fit:contain;right:75px;bottom:75px;filter:brightness(0) saturate(100%) invert(29%) sepia(30%) saturate(1192%) hue-rotate(137deg) brightness(91%) contrast(88%)}footer{position:fixed;z-index:3;left:72px;bottom:38px;font-size:15px;color:#658B8F}footer a{color:inherit;text-decoration:none}.error{font-size:28px;color:#658B8F;line-height:1.5}.loading{font-size:30px;color:#658B8F}.hidden{display:none!important}
+@media(min-width:2560px){.page{padding:80px 110px 190px;gap:48px}h1{font-size:80px}.clock{font-size:38px}.place{font-size:32px}.panel{padding:48px}.temperature{font-size:180px}.condition{font-size:52px}.hero-icon{width:180px;height:180px}.forecast h2{font-size:48px}.summary{font-size:34px}.hour-time{font-size:28px}.hour-temp{font-size:52px}.hour svg{width:90px;height:90px}.rain{font-size:32px}.rain-label,.status{font-size:22px}.metric strong{font-size:38px}.metric span,.feels{font-size:30px}}
+@media(max-width:1500px),(max-height:900px){.page{padding:36px 44px 120px;gap:24px}h1{font-size:42px}.clock{font-size:20px}.place{font-size:19px}.panel{padding:26px}.temperature{font-size:100px}.temperature small{font-size:32px}.hero-icon{width:85px;height:85px}.condition{font-size:29px}.feels{font-size:22px}.metric span{font-size:16px}.metric strong{font-size:23px}.forecast h2{font-size:28px}.summary{font-size:20px}.hour-time{font-size:16px}.hour-temp{font-size:29px}.hour svg{width:46px;height:46px}.rain{font-size:20px}.hour{padding:16px 4px;gap:12px}.hours{gap:8px}.status{font-size:14px}.logo{width:145px;height:133px;right:44px;bottom:40px}footer{left:44px;bottom:24px;font-size:12px}}
+@media(max-width:1000px){html,body{height:auto}.page{height:auto;min-height:100vh;padding-bottom:160px}.dashboard{grid-template-columns:1fr}.hours{min-height:260px}.current{gap:20px}.metrics{margin-top:0}.logo{opacity:.25}.clock{white-space:normal}header{align-items:flex-start}.temperature{font-size:110px}}
+@media(max-width:600px){.page{padding:26px 20px 150px}header{flex-direction:column;gap:14px}h1{font-size:34px}.clock{text-align:left}.hours{grid-template-columns:repeat(3,1fr)}.panel{padding:22px}.hour{min-height:180px}footer{left:20px;max-width:65%;font-size:11px}.now{gap:14px}}
+</style>
+</head>
+<body>
+<img class="logo" src="otc-logo.png" alt="" aria-hidden="true">
+<main class="page">
+<header><div><h1>Outside at One Town Centre</h1><p class="place">River District · Vancouver</p></div><div id="clock" class="clock"></div></header>
+<div id="loading" class="loading" role="status">Loading local weather…</div>
+<div id="error" class="error hidden" role="status">Weather is temporarily unavailable.<br>We’ll try again shortly.</div>
+<div id="dashboard" class="dashboard hidden">
+<section class="panel current" aria-label="Current conditions"><div><div class="eyebrow">Right now</div><div class="now"><div id="temperature" class="temperature"></div><div id="icon" class="hero-icon" aria-hidden="true"></div></div><div id="condition" class="condition"></div><div id="feels" class="feels"></div></div><div class="metrics"><div class="metric"><span>Today’s high</span><strong id="high"></strong></div><div class="metric"><span>Today’s low</span><strong id="low"></strong></div><div class="metric"><span>Wind</span><strong id="wind"></strong></div><div class="metric"><span>Humidity</span><strong id="humidity"></strong></div></div></section>
+<section class="panel forecast"><h2>The next six hours</h2><p id="summary" class="summary"></p><div id="hours" class="hours"></div><div id="status" class="status" role="status"></div></section>
+</div>
+</main>
+<footer>Weather by <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> · Local forecast estimates · Refreshes every 10 minutes</footer>
+<script>
+'use strict';
+const ZONE='Etc/GMT+7';
+const REFRESH=10*60*1000;
+const endpoint=new URL('https://api.open-meteo.com/v1/forecast');
+endpoint.search=new URLSearchParams({latitude:'49.206',longitude:'-123.030',current:'temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,wind_speed_10m',hourly:'temperature_2m,precipitation_probability,weather_code,is_day',daily:'temperature_2m_max,temperature_2m_min',timezone:ZONE,timeformat:'unixtime',forecast_days:'3',past_days:'1'});
+const el=id=>document.getElementById(id);
+let lastSuccess=0,observedAt=0,busy=false,failed=false;
+const stamp=(seconds,options)=>new Intl.DateTimeFormat('en-CA',{timeZone:ZONE,...options}).format(new Date(seconds*1000));
+const number=value=>Number.isFinite(value)?Math.round(value):'—';
+function weather(code,day){
+ if(code===0)return [day?'Clear skies':'Clear night',day?'sun':'moon'];
+ if(code===1||code===2)return ['Partly cloudy',day?'partly':'cloud'];
+ if(code===3)return ['Overcast','cloud'];
+ if(code===45||code===48)return ['Fog','fog'];
+ if([51,53,55,56,57].includes(code))return ['Drizzle','rain'];
+ if([61,63,65,66,67,80,81,82].includes(code))return ['Rain','rain'];
+ if([71,73,75,77,85,86].includes(code))return ['Snow','snow'];
+ if([95,96,99].includes(code))return ['Thunderstorms','storm'];
+ return ['Conditions unavailable','cloud'];
+}
+function icon(type){
+ const sun='<circle cx="32" cy="30" r="12"/><path d="M32 7v5m0 36v5M9 30h5m36 0h5M16 14l4 4m24 24 4 4M16 46l4-4m24-24 4-4"/>';
+ const cloud='<path d="M17 43h30a10 10 0 0 0 0-20 16 16 0 0 0-30-1 11 11 0 0 0 0 21Z"/>';
+ const shapes={sun,moon:'<path d="M46 43A23 23 0 0 1 23 10a23 23 0 1 0 23 33Z"/>',cloud,partly:'<circle cx="21" cy="19" r="9"/><path d="M21 4v3M6 19h3m2-10 3 3m17-3-3 3"/>'+cloud,rain:cloud+'<path d="m23 50-3 7m15-7-3 7m15-7-3 7"/>',snow:cloud+'<path d="M21 52h1m10 4h1m10-4h1"/>',fog:cloud+'<path d="M13 50h40M18 57h30"/>',storm:cloud+'<path d="m34 45-7 10h9l-5 8"/>'};
+ return '<svg viewBox="0 0 64 64" width="100%" height="100%" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+shapes[type]+'</svg>';
+}
+function updateClock(){el('clock').textContent=stamp(Date.now()/1000,{weekday:'long',month:'long',day:'numeric'})+' · '+stamp(Date.now()/1000,{hour:'numeric',minute:'2-digit',hour12:true});updateStatus();}
+function updateStatus(){
+ if(!lastSuccess)return;
+ const stale=failed||Date.now()-lastSuccess>25*60*1000||Date.now()-observedAt*1000>90*60*1000;
+ el('status').classList.toggle('stale',stale);
+ el('status').textContent=(stale?'Update delayed · Showing earlier weather. ':'')+'Conditions at '+stamp(observedAt,{hour:'numeric',minute:'2-digit',hour12:true})+' · Last refreshed '+stamp(lastSuccess/1000,{hour:'numeric',minute:'2-digit',hour12:true})+' PCT';
+}
+function render(data){
+ const c=data.current,h=data.hourly,d=data.daily;
+ if(!c||!Number.isFinite(c.temperature_2m)||!Number.isFinite(c.time)||!h||!Array.isArray(h.time)||!d||!Array.isArray(d.time))throw Error('Incomplete weather data');
+ const today=stamp(Date.now()/1000,{year:'numeric',month:'2-digit',day:'2-digit'});
+ const dailyIndex=d.time.findIndex(t=>stamp(t,{year:'numeric',month:'2-digit',day:'2-digit'})===today);
+ const indexes=h.time.map((t,i)=>({t,i})).filter(item=>item.t>=Date.now()/1000).slice(0,6);
+ if(indexes.length<6||dailyIndex<0)throw Error('Forecast missing');
+ const condition=weather(c.weather_code,c.is_day);
+ el('temperature').innerHTML=number(c.temperature_2m)+'<small>°C</small>';
+ el('condition').textContent=condition[0];el('icon').innerHTML=icon(condition[1]);
+ el('feels').textContent='Feels like '+number(c.apparent_temperature)+'°C';
+ el('high').textContent=number(d.temperature_2m_max[dailyIndex])+'°C';el('low').textContent=number(d.temperature_2m_min[dailyIndex])+'°C';
+ el('wind').textContent=number(c.wind_speed_10m)+' km/h';el('humidity').textContent=number(c.relative_humidity_2m)+'%';
+ el('hours').innerHTML=indexes.map(({t,i})=>'<div class="hour"><div class="hour-time">'+stamp(t,{hour:'numeric',hour12:true}).toUpperCase()+'</div>'+icon(weather(h.weather_code[i],h.is_day[i])[1])+'<div class="hour-temp">'+number(h.temperature_2m[i])+'°</div><div class="rain">'+number(h.precipitation_probability[i])+'%<span class="rain-label">Rain chance</span></div></div>').join('');
+ const chances=indexes.map(({i})=>h.precipitation_probability[i]).filter(Number.isFinite);
+ const peak=chances.length?Math.max(...chances):null;
+ el('summary').textContent=peak===null?'Hourly temperature and precipitation forecast.':peak<20?'Low rain chances over the next six hours.':peak<50?'Some chance of rain in the next six hours.':'Rain is possible — consider bringing an umbrella.';
+ observedAt=c.time;lastSuccess=Date.now();failed=false;
+ el('dashboard').classList.remove('hidden');el('error').classList.add('hidden');updateStatus();
+}
+async function refresh(){
+ if(busy)return;busy=true;const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),15000);
+ try{const response=await fetch(endpoint,{signal:controller.signal,cache:'no-store'});if(!response.ok)throw Error('Weather unavailable');render(await response.json());}
+ catch(error){failed=true;if(!lastSuccess)el('error').classList.remove('hidden');updateStatus();}
+ finally{clearTimeout(timeout);busy=false;el('loading').classList.add('hidden');}
+}
+updateClock();setInterval(updateClock,30000);refresh();setInterval(refresh,REFRESH);window.addEventListener('online',refresh);
+</script>
+</body>
+</html>
